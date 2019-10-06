@@ -14,6 +14,7 @@ plugins {
     id 'nebula.ospackage' version '7.4.2'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'edu.sc.seis.macAppBundle' version '2.3.0'
+    id 'edu.sc.seis.launch4j' version '2.4.6'
 }
 
 allprojects {
@@ -257,7 +258,7 @@ macAppBundle {
     mainClassName = "com.mucommander.main.muCommander"
     appStyle = "Oracle"
     bundleJRE = true
-    jreHome = "jre/Contents/Home"
+    jreHome = "jre/macOS/Contents/Home"
     bundleIdentifier = "com.mucommander.muCommander"
     jvmVersion = "1.6+"
     icon = "package/osx/icon.icns"
@@ -282,25 +283,30 @@ macAppBundle {
     javaProperties.put("file.encoding", "UTF-8")
 }
 
-/*
-plugins {
-    id 'edu.sc.seis.macAppBundle' version '2.1.6'
-    id 'edu.sc.seis.launch4j' version '2.4.4'
+launch4j {
+    outfile = project.tasks.jar.archiveName.replace('jar', 'exe')
+    mainClassName = "com.mucommander.main.muCommander"
+    copyConfigurable = project.tasks.shadowJar.outputs.files
+    bundledJre64Bit = true
+    bundledJrePath = "jre"
+  //  jar = "lib/${project.tasks.shadowJar.archiveName}"
+    jar = "${project.tasks.shadowJar.archiveName}"
+    dontWrapJar = true
+    classpath = ['.']
+    // headerType = "console"
 }
-
+/*
 launch4j {
     icon = "$projectDir/package/windows/mucommander.ico"
     copyConfigurable = project.tasks.shadowJar.outputs.files
-    if (project.hasProperty('dontWrapJar')) {
-        dontWrapJar = true
-        jar = 'mucommander.jar'
-    }
-    else {
-        jar = shadowJar.archivePath
-    }
+    mainClassName = "mucommander.Main"
+    bundledJre64Bit = true
+    bundledJrePath = "jre"
+//    dontWrapJar = true
+//    jar = "mucommander-0.9.4.jar"
     outfile = project.tasks.jar.archiveName.replace('jar', 'exe')
-    cmdLine = '-p %HOMEPATH%/.mucommander'
-    opt = '-Djava.system.class.loader=com.mucommander.commons.file.AbstractFileClassLoader'
+//    cmdLine = '-p %HOMEPATH%/.mucommander'
+//    opt = '-Djava.system.class.loader=com.mucommander.commons.file.AbstractFileClassLoader'
 }
 
 // Windows installer
