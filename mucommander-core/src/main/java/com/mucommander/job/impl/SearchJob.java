@@ -19,7 +19,10 @@ package com.mucommander.job.impl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -68,11 +71,18 @@ public class SearchJob extends FileJob implements com.mucommander.commons.file.p
     }
 
     private List<AbstractFile> search(List<AbstractFile> files, boolean subfolder) {
-        return files.parallelStream()
+        ForkJoinPool fjp1 = new ForkJoinPool(2);
+        Callable<List<AbstractFile>> c = () -> files.parallelStream()
                 .filter(subfolder ? lsFilter : file -> true)
                 .map(this::search)
                 .flatMap(stream -> stream)
                 .collect(Collectors.toList());
+        try {
+            return fjp1.submit(c).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     private Stream<AbstractFile> search(AbstractFile file) {
