@@ -49,6 +49,8 @@ dependencies {
     runtimeOnly 'org.jetbrains.intellij.deps:trove4j:1.0.20200330'
     comprise 'org.jetbrains.jediterm:jediterm-pty:2.69'
     comprise 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
+    implementation 'log4j:log4j:1.2.17'
+
 
     testImplementation 'org.testng:testng:6.11'
     testImplementation 'junit:junit:4.12'
@@ -71,7 +73,6 @@ jar {
         include 'org/jetbrains/**'
         include 'resources/com/pty4j/**'
         include 'com/sun/**'
-        include 'org/apache/log4j/**'
         exclude 'codegen/**'
         exclude 'META-INF/**'
    } }
@@ -87,7 +88,7 @@ jar {
         'Implementation-Version': revision.substring(0, 7),
         'Build-Date': new Date().format('yyyyMMdd'),
         'Build-Url': "https://www.mucommander.com/version/nightly.xml",
-        'Import-Package': 'org.violetlib.aqua;resolution:=dynamic,com.formdev.flatlaf;resolution:=dynamic,kotlin.internal.*;resolution:=dynamic,javax.jms;resolution:=dynamic,com.ibm.uvm.tools;resolution:=dynamic,sun.swing;resolution:=dynamic,org.apache.log4j;resolution:=dynamic,java.awt.*;resolution:=dynamic,sun.awt.*;resolution:=dynamic,kotlin.reflect.jvm.internal;resolution:=dynamic,com.sun.*;resolution:=dynamic,apple.awt.*;resolution:=dynamic,com.apple.*;resolution:=dynamic,sun.security.action;resolution:=dynamic,*',
+        'Import-Package': '!kotlin.internal.*,!com.ibm.uvm.tools,!kotlin.reflect.jvm.internal,org.violetlib.aqua;resolution:=dynamic,com.formdev.flatlaf;resolution:=dynamic,com.apple.*;resolution:=dynamic,sun.security.action;resolution:=dynamic,*',
         'Export-Package':
             'com.mucommander.core.desktop,' +
             'com.mucommander.job,' +
