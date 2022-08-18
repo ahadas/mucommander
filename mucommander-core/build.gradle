@@ -38,7 +38,7 @@ dependencies {
     // and placed directly into muC.
     comprise files('libs/jediterm-2.69.jar')
     comprise files('libs/eawtstub.jar')
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation files('libs/guava-31.1-jre.jar')
     comprise 'org.jetbrains.jediterm:jediterm-typeahead:2.69'
     comprise 'org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10'
     implementation 'org.jetbrains:annotations:23.0.0'
