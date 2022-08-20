@@ -38,7 +38,9 @@ dependencies {
     // and placed directly into muC.
     comprise files('libs/jediterm-2.69.jar')
     comprise files('libs/eawtstub.jar')
-    implementation files('libs/guava-31.1-jre.jar')
+    implementation 'org.checkerframework:checker-qual:3.24.0'
+
+    comprise 'com.google.guava:guava:31.1-jre'
     comprise 'org.jetbrains.jediterm:jediterm-typeahead:2.69'
     comprise 'org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10'
     implementation 'org.jetbrains:annotations:23.0.0'
@@ -73,9 +75,11 @@ jar {
         include 'org/jetbrains/**'
         include 'resources/com/pty4j/**'
         include 'com/sun/**'
+        include 'com/google/**'
         exclude 'codegen/**'
         exclude 'META-INF/**'
    } }
+   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
    bnd ('Bundle-Name': 'muCommander-core',
         'Bundle-Vendor': 'muCommander',
         'Bundle-Description': 'The core part of muCommander',
@@ -88,7 +92,7 @@ jar {
         'Implementation-Version': revision.substring(0, 7),
         'Build-Date': new Date().format('yyyyMMdd'),
         'Build-Url': "https://www.mucommander.com/version/nightly.xml",
-        'Import-Package': '!kotlin.internal.*,!com.ibm.uvm.tools,!kotlin.reflect.jvm.internal,org.violetlib.aqua;resolution:=dynamic,com.formdev.flatlaf;resolution:=dynamic,com.apple.*;resolution:=dynamic,sun.security.action;resolution:=dynamic,*',
+        'Import-Package': '!javax.annotation.*,!com.google.appengine*,!com.google.apphosting.*,!kotlin.internal.*,!com.ibm.uvm.tools,!kotlin.reflect.jvm.internal,org.violetlib.aqua;resolution:=dynamic,com.formdev.flatlaf;resolution:=dynamic,com.apple.*;resolution:=dynamic,sun.security.action;resolution:=dynamic,*',
         'Export-Package':
             'com.mucommander.core.desktop,' +
             'com.mucommander.job,' +
