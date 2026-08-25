@@ -35,6 +35,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import com.formdev.flatlaf.util.UIScale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,9 +89,9 @@ public abstract class TransferDestinationDialog extends JobDialog implements Act
     private Thread thread;
 
     // Dialog size constraints
-    protected final static Dimension MINIMUM_DIALOG_DIMENSION = new Dimension(360,0);
+    protected final static Dimension MINIMUM_DIALOG_DIMENSION = UIScale.scale(new Dimension(360,0));
     // Dialog width should not exceed 360, height is not an issue (always the same)
-    protected final static Dimension MAXIMUM_DIALOG_DIMENSION = new Dimension(400,10000);
+    protected final static Dimension MAXIMUM_DIALOG_DIMENSION = UIScale.scale(new Dimension(400,10000));
 
     private final static FileCollisionDialog.FileCollisionAction DEFAULT_ACTIONS[] = {
         FileCollisionDialog.FileCollisionAction.CANCEL,
